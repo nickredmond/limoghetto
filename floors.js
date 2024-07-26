@@ -7,9 +7,11 @@ import {
 } from 'three'
 
 let scene;
+let floors = []
+const PANEL_SIZE = 50
 
 function addFloor(x, y, z) {
-  const geometry = new PlaneGeometry(50, 50)
+  const geometry = new PlaneGeometry(PANEL_SIZE, PANEL_SIZE)
   const texture = new TextureLoader()
   .load('textures/moon-rock.jpg', function(texture) {
     texture.wrapS = texture.wrapT = RepeatWrapping;
@@ -27,13 +29,30 @@ function addFloor(x, y, z) {
   plane.position.z = z 
   plane.rotation.x = -1.571
   scene.add(plane)
+  floors.push(plane)
 }
+
+const MAX_LENGTH = 150
 
 export function initFloors(scn) {
   scene = scn
-  for (var x = -120; x < 120; x += 49.9) {
-    for (var z = -120; z < 120; z += 49.9) {
+  const increment = PANEL_SIZE - 0.1
+  for (var x = -MAX_LENGTH; x < MAX_LENGTH; x += increment) {
+    for (var z = -MAX_LENGTH; z <= MAX_LENGTH/2; z += increment) {
       addFloor(x, 0, z)
+    }
+  }
+}
+
+const velocity = 20
+
+export function updateFloors(dt) {
+  const movement = velocity * dt / 1000
+  for (let floor of floors) {
+    if (floor.position.z >= MAX_LENGTH/2) {
+      floor.position.z = -MAX_LENGTH
+    } else {
+      floor.position.z += movement
     }
   }
 }

@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { handleTouchMove, handleTouchEnd } from './touches.js'
-import { initFloors } from './floors.js'
+import { initFloors, updateFloors } from './floors.js'
 
 const scene = new THREE.Scene()
 
@@ -37,7 +37,9 @@ initFloors(scene)
 camera.position.y = 5
 camera.position.z = 5
 
+const dt = 1000 / 60
 function animate() {
+  updateFloors(dt)
   
   renderer.render(scene, camera)
 }
