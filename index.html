@@ -5,7 +5,18 @@
     <title>My first three.js app</title> 
     <style> body { margin: 0; } </style> 
   </head> 
-  <body> 
+  <body>
+    <img id="crosshair" src="/crosshair.png" />
+    <style>
+      #crosshair {
+        position: absolute;
+        z-index: 10;
+        width: 10vw;
+        height: auto;
+        left: 45vw;
+        top: 45vh;
+      }
+    </style>
     <script type="module" src="/main.js"></script> 
   </body> 
 </html>
