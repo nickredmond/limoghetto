@@ -49,18 +49,31 @@ document.getElementById('btn-shoot').addEventListener('touchstart', () => {
   const qz = Math.cos(yaw) * Math.cos(pitch)
   const qx = -Math.sin(pitch)
   
-  const geometry = new THREE.SphereGeometry(1);
+  const material = new THREE.LineBasicMaterial( {
+    color: 0xff0000,
+    linewidth: 10
+  } );
+  
+  const points = [];
+points.push( new THREE.Vector3( 0, 5, 5 ) );
+points.push( new THREE.Vector3( qx, 5 + qy, 5 + qz ) );
+
+const geometry = new THREE.BufferGeometry().setFromPoints( points );
+  
+  const line = new THREE.Line( geometry, material );
+  scene.add(line)
+/**  const geometry = new THREE.SphereGeometry(1);
   const material = new THREE.MeshBasicMaterial({
     color: 0xff0000
   });
   const sphere = new THREE.Mesh(geometry, material);
   sphere.position.y = 5
-  scene.add(sphere);
+  scene.add(sphere);*/
   
   setInterval(() => {
-   sphere.position.x += qx
-    sphere.position.y += qy
-   sphere.position.z -= qz
+   line.position.x += qx
+    line.position.y += qy
+   line.position.z -= qz
     //const end = getNextPoint(start.x, start.y, start.z, 1, pitch, yaw)
   }, 1000 / 60)
 })
