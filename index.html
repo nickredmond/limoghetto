@@ -2,11 +2,12 @@
 <html lang="en"> 
   <head> 
     <meta charset="utf-8"> 
-    <title>My first three.js app</title> 
+    <title>MoonTweak</title> 
     <style> body { margin: 0; } </style> 
   </head> 
   <body>
     <img id="crosshair" src="/crosshair.png" />
+    <button id="btn-shoot" type="button"></button>
     <style>
       #crosshair {
         position: absolute;
@@ -15,6 +16,18 @@
         height: auto;
         left: 45vw;
         top: 45vh;
+      }
+      
+      #btn-shoot {
+        position: absolute;
+        z-index: 10;
+        width: 18vw;
+        height: 18vw;
+        right: 8vw;
+        bottom: 8vw;
+        border-radius: 9vw;
+        border: none;
+        background-color: #efefef;
       }
     </style>
     <script type="module" src="/main.js"></script> 

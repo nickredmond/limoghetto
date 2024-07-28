@@ -40,6 +40,31 @@ camera.position.y = 5
 camera.position.z = 5
 camera.rotation.x = 0.2
 
+document.getElementById('btn-shoot').addEventListener('touchstart', () => {
+ //alert('yeah')
+  const yaw = camera.rotation.x 
+  const pitch = camera.rotation.y 
+  
+  const qy = Math.sin(yaw) * Math.cos(pitch)
+  const qz = Math.cos(yaw) * Math.cos(pitch)
+  const qx = -Math.sin(pitch)
+  
+  const geometry = new THREE.SphereGeometry(1);
+  const material = new THREE.MeshBasicMaterial({
+    color: 0xff0000
+  });
+  const sphere = new THREE.Mesh(geometry, material);
+  sphere.position.y = 5
+  scene.add(sphere);
+  
+  setInterval(() => {
+   sphere.position.x += qx
+    sphere.position.y += qy
+   sphere.position.z -= qz
+    //const end = getNextPoint(start.x, start.y, start.z, 1, pitch, yaw)
+  }, 1000 / 60)
+})
+
 const dt = 1000 / 60
 
 function animate() {
