@@ -2,6 +2,8 @@ import * as THREE from 'three';
 import { handleTouchMove, handleTouchEnd } from './touches.js'
 import { initFloors, updateFloors } from './floors.js'
 import { initBackground } from './background.js'
+import { removeObject3D } from './utils.js'
+import { initEnemies, updateEnemies } from './enemies.js'
 
 const scene = new THREE.Scene()
 
@@ -35,13 +37,13 @@ renderer.domElement.addEventListener('touchend', (evt) => {
 
 initFloors(scene)
 initBackground(scene)
+initEnemies(scene)
 
 camera.position.y = 5
 camera.position.z = 5
 camera.rotation.x = 0.2
 
 document.getElementById('btn-shoot').addEventListener('touchstart', () => {
- //alert('yeah')
   const yaw = camera.rotation.x 
   const pitch = camera.rotation.y 
   
@@ -62,19 +64,15 @@ const geometry = new THREE.BufferGeometry().setFromPoints( points );
   
   const line = new THREE.Line( geometry, material );
   scene.add(line)
-/**  const geometry = new THREE.SphereGeometry(1);
-  const material = new THREE.MeshBasicMaterial({
-    color: 0xff0000
-  });
-  const sphere = new THREE.Mesh(geometry, material);
-  sphere.position.y = 5
-  scene.add(sphere);*/
   
-  setInterval(() => {
+  const lineInterval = setInterval(() => {
    line.position.x += qx
     line.position.y += qy
    line.position.z -= qz
-    //const end = getNextPoint(start.x, start.y, start.z, 1, pitch, yaw)
+   if (line.position.z < -120 || Math.abs(line.position.x) > 120 || line.position.y > 120) {
+     removeObject3D(line)
+     clearInterval(lineInterval)
+   }
   }, 1000 / 60)
 })
 
@@ -82,6 +80,7 @@ const dt = 1000 / 60
 
 function animate() {
   updateFloors(dt)
+  updateEnemies()
   
   renderer.render(scene, camera)
 }
