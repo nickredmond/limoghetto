@@ -4,7 +4,7 @@ import { initFloors, updateFloors } from './floors.js'
 import { initBackground } from './background.js'
 import { removeObject3D } from './utils.js'
 import { initEnemies, updateEnemies, getEnemies } from './enemies.js'
-import { checkCollision } from './collision.js'
+import { updateSceneCollision } from './collision.js'
 
 const scene = new THREE.Scene()
 
@@ -79,41 +79,13 @@ const geometry = new THREE.BufferGeometry().setFromPoints( points );
   }, 1000 / 60)
 })
 
-function updateSceneCollision() {
-  const enemies = getEnemies()
-  const collided = checkCollision(lines, enemies, 0.5, 1)
-  let deletedIndices = []
-  for (let i = 0; i < lines.length; i++) {
-    for (let obj of collided.objects1) {
-      if (obj === lines[i]) {
-        deletedIndices.push(i)
-      }
-    }
-  }
-  for (let deleted of deletedIndices) {
-    removeObject3D(lines[deleted])
-    lines.splice(deleted, 1)
-  }
-  deletedIndices = []
-  for (let i = 0; i < enemies.length; i++) {
-    for (let obj of collided.objects2) {
-      if (obj === enemies[i]) {
-        deletedIndices.push(i)
-      }
-    }
-  }
-  for (let deleted of deletedIndices) {
-    removeObject3D(enemies[deleted])
-    enemies.splice(deleted, 1)
-  }
-}
-
 const dt = 1000 / 60
 
 function animate() {
   updateFloors(dt)
   updateEnemies()
-  updateSceneCollision()
+  const enemies = getEnemies()
+  updateSceneCollision(lines, enemies)
   
   renderer.render(scene, camera)
 }

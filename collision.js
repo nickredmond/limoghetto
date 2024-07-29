@@ -1,4 +1,6 @@
-export function checkCollision(objects1, objects2, r1, r2) {
+import { removeObject3D } from './utils.js'
+
+function checkCollision(objects1, objects2, r1, r2) {
   let collidedObjs = {
     objects1: new Set(),
     objects2: new Set()
@@ -17,4 +19,32 @@ export function checkCollision(objects1, objects2, r1, r2) {
     }
   }
   return collidedObjs
+}
+
+export function updateSceneCollision(lines, enemies) {
+  const collided = checkCollision(lines, enemies, 0.5, 1)
+  let deletedIndices = []
+  for (let i = 0; i < lines.length; i++) {
+    for (let obj of collided.objects1) {
+      if (obj === lines[i]) {
+        deletedIndices.push(i)
+      }
+    }
+  }
+  for (let deleted of deletedIndices) {
+    removeObject3D(lines[deleted])
+    lines.splice(deleted, 1)
+  }
+  deletedIndices = []
+  for (let i = 0; i < enemies.length; i++) {
+    for (let obj of collided.objects2) {
+      if (obj === enemies[i]) {
+        deletedIndices.push(i)
+      }
+    }
+  }
+  for (let deleted of deletedIndices) {
+    removeObject3D(enemies[deleted])
+    enemies.splice(deleted, 1)
+  }
 }
