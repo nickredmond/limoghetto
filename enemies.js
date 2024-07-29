@@ -21,6 +21,12 @@ export function initEnemies(scn) {
   });
 }
 
+let enemies = []
+
+export function getEnemies() {
+  return enemies
+}
+
 function addEnemy() {
   const dist = 100
   const x1 = 0
@@ -45,6 +51,7 @@ function addEnemy() {
   sphere.position.z = -z2
   sphere.rotation.y = 1.571
   scene.add(sphere);
+  enemies.push(sphere)
   
   direction.x *= 0.5
   direction.y *= 0.5
