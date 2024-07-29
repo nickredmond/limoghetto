@@ -5,6 +5,7 @@ import { initBackground } from './background.js'
 import { removeObject3D } from './utils.js'
 import { initEnemies, updateEnemies, getEnemies } from './enemies.js'
 import { updateSceneCollision } from './collision.js'
+import { updateScore } from './hud.js'
 
 const scene = new THREE.Scene()
 
@@ -85,7 +86,8 @@ function animate() {
   updateFloors(dt)
   updateEnemies()
   const enemies = getEnemies()
-  updateSceneCollision(lines, enemies)
+  const killedQty = updateSceneCollision(lines, enemies)
+  updateScore(killedQty * 10)
   
   renderer.render(scene, camera)
 }

@@ -47,4 +47,5 @@ export function updateSceneCollision(lines, enemies) {
     removeObject3D(enemies[deleted])
     enemies.splice(deleted, 1)
   }
+  return deletedIndices.length
 }

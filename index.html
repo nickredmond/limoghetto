@@ -7,6 +7,9 @@
   </head> 
   <body>
     <img id="crosshair" src="/crosshair.png" />
+    <div id="score-wrapper">
+      <p id="score">00000</p>
+    </div>
     <button id="btn-shoot" type="button"></button>
     <style>
       #crosshair {
@@ -28,6 +31,20 @@
         border-radius: 9vw;
         border: none;
         background-color: #efefef;
+      }
+      
+      #score-wrapper {
+        width: 15vw;
+        position: absolute;
+        right: 10vw;
+        top: 0;
+      }
+      
+      #score {
+        text-align: right;
+        font-family: Consolas;
+        font-size: 4vh;
+        color: #efefef;
       }
     </style>
     <script type="module" src="/main.js"></script> 
