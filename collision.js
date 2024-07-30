@@ -43,9 +43,11 @@ export function updateSceneCollision(lines, enemies) {
       }
     }
   }
+  let deletedObjs = []
   for (let deleted of deletedIndices) {
+    deletedObjs.push(enemies[deleted])
     removeObject3D(enemies[deleted])
     enemies.splice(deleted, 1)
   }
-  return deletedIndices.length
+  return deletedObjs
 }

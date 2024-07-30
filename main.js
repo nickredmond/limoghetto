@@ -6,6 +6,7 @@ import { removeObject3D } from './utils.js'
 import { initEnemies, updateEnemies, getEnemies } from './enemies.js'
 import { updateSceneCollision } from './collision.js'
 import { updateScore } from './hud.js'
+import { addEnemyExplosion, updateEnemyExplosions } from './particles.js'
 
 const scene = new THREE.Scene()
 
@@ -86,8 +87,12 @@ function animate() {
   updateFloors(dt)
   updateEnemies()
   const enemies = getEnemies()
-  const killedQty = updateSceneCollision(lines, enemies)
-  updateScore(killedQty * 10)
+  const deletedEnemies = updateSceneCollision(lines, enemies)
+  updateScore(deletedEnemies.length * 10)
+  for (let deleted of deletedEnemies) {
+    addEnemyExplosion(scene, deleted.position)
+  }
+  updateEnemyExplosions()
   
   renderer.render(scene, camera)
 }
