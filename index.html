@@ -7,10 +7,16 @@
   </head> 
   <body>
     <img id="crosshair" src="/crosshair.png" />
+    <div id="health-wrapper">
+      <span id="health-1">&hearts;</span>
+      <span id="health-2">&hearts;</span>
+      <span id="health-3">&hearts;</span>
+    </div>
     <div id="score-wrapper">
       <p id="score">00000</p>
     </div>
     <button id="btn-shoot" type="button"></button>
+    <div id="game-over">GAME OVER</div>
     <style>
       #crosshair {
         position: absolute;
@@ -38,12 +44,36 @@
         position: absolute;
         right: 10vw;
         top: 0;
+        z-index: 10;
       }
       
       #score {
         text-align: right;
         font-family: Consolas;
         font-size: 4vh;
+        color: #efefef;
+      }
+      
+      #health-wrapper {
+        position: absolute;
+        left: 8vw;
+        top: 8vw;
+        z-index: 10;
+      }
+      
+      #health-wrapper span {
+        padding-right: 2vw;
+        font-size: 4vh;
+      }
+      
+      #game-over {
+        display: none;
+        position: absolute;
+        left: 20vw;
+        top: 35vh;
+        z-index: 10;
+        font-family: Consolas;
+        font-size: 6vh;
         color: #efefef;
       }
     </style>

@@ -27,6 +27,11 @@ export function getEnemies() {
   return enemies
 }
 
+export function removeEnemy(name) {
+  enemies = enemies.filter(e => e.name !== name)
+}
+
+let sphereIndex = 1
 function addEnemy() {
   const dist = 100
   const x1 = 0
@@ -50,24 +55,19 @@ function addEnemy() {
   sphere.position.y = y2
   sphere.position.z = -z2
   sphere.rotation.y = 1.571
+  sphere.name = 'sphere' + sphereIndex
+  sphereIndex++
   scene.add(sphere);
   enemies.push(sphere)
   
-  direction.x *= 0.5
-  direction.y *= 0.5
-  direction.z *= 0.5
-  const interval = setInterval(() => {
-   sphere.position.x += direction.x
-   sphere.position.y += direction.y
-   sphere.position.z -= direction.z
-   if (sphere.position.z >= 5) {
-     removeObject3D(sphere)
-     clearInterval(interval)
-   }
-  }, 1000 / 60)
+  sphere.direction = {
+   x: direction.x *= 0.5,
+   y: direction.y *= 0.5,
+   z: direction.z *= 0.5
+  }
 }
 
-export function updateEnemies() {
+export function updateEnemies(onPlayerHit) {
   if (!isEnemyTimeout) {
     isEnemyTimeout = true
     addEnemy()
@@ -76,4 +76,18 @@ export function updateEnemies() {
       isEnemyTimeout = false
     }, enemyTimeout)
   }
+  
+  const aliveEnemies = []
+  for (let enemy of enemies) {
+    enemy.position.x += enemy.direction.x
+   enemy.position.y += enemy.direction.y
+   enemy.position.z -= enemy.direction.z
+   if (enemy.position.z >= 5) {
+     removeObject3D(enemy)
+     onPlayerHit()
+   } else {
+     aliveEnemies.push(enemy)
+   }
+  }
+  enemies = aliveEnemies
 }
