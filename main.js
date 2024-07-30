@@ -92,7 +92,7 @@ function animate() {
   for (let deleted of deletedEnemies) {
     addEnemyExplosion(scene, deleted.position)
   }
-  updateEnemyExplosions()
+  updateEnemyExplosions(dt)
   
   renderer.render(scene, camera)
 }

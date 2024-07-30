@@ -1,13 +1,13 @@
 import {
   BufferGeometry,
   Float32BufferAttribute,
+  ShaderMaterial,
   Vector3,
   PointsMaterial,
   Points
 } from 'three'
+import { removeObject3D } from './utils.js'
 
-//let particles = []
-//let meshes = []
 let enemyExplosions = []
 
 function rand(min, max) {
@@ -26,14 +26,12 @@ export function addEnemyExplosion(scene, position) {
         velocities.push(rand(-0.75, 0.75))
         velocities.push(rand(-0.75, 0.75))
         velocities.push(rand(-0.75, 0.75))
-        
-       // geo.vertices.push(particle.position)
     }
     const geo = new BufferGeometry()//.setFromPoints(points)
     geo.setAttribute('position', new Float32BufferAttribute(points, 3))
     geo.setAttribute('size', new Float32BufferAttribute(sizes, 1))
     
-    const mat = new PointsMaterial({color:0xffffff})
+    const mat = new PointsMaterial({color:0xaaffbb})
     const mesh = new Points(geo,mat)
     mesh.position.x = position.x
     mesh.position.y = position.y
@@ -41,17 +39,44 @@ export function addEnemyExplosion(scene, position) {
     scene.add(mesh)
    enemyExplosions.push({
       geo,
-      velocities
+      mesh,
+      velocities,
+      timeLapsed: 0
     }) 
 }
 
-export function updateEnemyExplosions() {
-   enemyExplosions.forEach(e => {
-     const particles = e.geo.attributes.position.array 
-     for (let i = 0; i < 300; i++) {
-       particles[i] += e.velocities[i]
-       e.velocities[i] += e.velocities[i] > 0 ? -0.005 : 0.005
+function calcEnemyParticles(e) {
+  const particles = e.geo.attributes.position.array 
+  const removedIndex = Math.floor(Math.random()*100)
+  let currentIndex = 0
+  for (let i = 0; i < 300; i+=3) {
+    if (currentIndex === removedIndex) {
+      particles[i+2] = 25
+    } else {
+      particles[i] += e.velocities[i]
+      e.velocities[i] += e.velocities[i] > 0 ? -0.005 : 0.005
+      particles[i+1] += e.velocities[i+1]
+      e.velocities[i+1] += e.velocities[i+1] > 0 ? -0.005 : 0.005
+      particles[i+2] += e.velocities[i+2]
+      e.velocities[i+2] += e.velocities[i+2] > 0 ? -0.005 : 0.005
+    }
+    currentIndex++
+  }
+  e.geo.attributes.position.needsUpdate = true
+}
+
+export function updateEnemyExplosions(dt) {
+   let removedIndexes = []
+   enemyExplosions.forEach((e, i) => {
+     e.timeLapsed += dt
+     if (e.timeLapsed >= 3000) {
+       removeObject3D(e.mesh)
+       removedIndexes.push(i)
+     } else {
+       calcEnemyParticles(e)
      }
-     e.geo.attributes.position.needsUpdate = true
    })
+   for (let i of removedIndexes) {
+     enemyExplosions.splice(i, 1)
+   }
  }
