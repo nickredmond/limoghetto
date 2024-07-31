@@ -5,7 +5,7 @@ import {
   TextureLoader
 } from 'three'
 import { removeObject3D } from './utils.js'
-import { initObject } from './objectUtils.js'
+import { initObject, updateObjects } from './objectUtils.js'
 
 let scene;
 let geometry, material;
@@ -48,17 +48,5 @@ export function updateEnemies(onPlayerHit) {
     }, enemyTimeout)
   }
   
-  const aliveEnemies = []
-  for (let enemy of enemies) {
-    enemy.position.x += enemy.direction.x
-   enemy.position.y += enemy.direction.y
-   enemy.position.z -= enemy.direction.z
-   if (enemy.position.z >= 5) {
-     removeObject3D(enemy)
-     onPlayerHit()
-   } else {
-     aliveEnemies.push(enemy)
-   }
-  }
-  enemies = aliveEnemies
+  enemies = updateObjects(onPlayerHit, enemies)
 }
