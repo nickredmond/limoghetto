@@ -24,24 +24,26 @@ export function initObject(mesh) {
   mesh.position.x = x2 
   mesh.position.y = y2
   mesh.position.z = -z2
-  mesh.rotation.y = 1.571
   mesh.name = 'mesh' + meshIndex
   meshIndex++
   
   mesh.direction = {
-   x: direction.x *= 0.5,
-   y: direction.y *= 0.5,
-   z: direction.z *= 0.5
+   x: direction.x * 0.5,
+   y: direction.y * 0.5,
+   z: direction.z * 0.5
   }
 }
 
 
-export function updateObjects(onPlayerHit, objects) {
+export function updateObjects(onPlayerHit, objects, eachObj) {
   const aliveObjects = []
   for (let obj of objects) {
     obj.position.x += obj.direction.x
    obj.position.y += obj.direction.y
-   obj.position.z -= obj.direction.z
+   obj.position.z -= obj.direction.z 
+   if (eachObj) {
+     eachObj(obj)
+   }
    if (obj.position.z >= 5) {
      removeObject3D(obj)
      onPlayerHit()

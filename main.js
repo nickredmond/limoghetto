@@ -4,6 +4,7 @@ import { initFloors, updateFloors } from './floors.js'
 import { initBackground } from './background.js'
 import { removeObject3D } from './utils.js'
 import { initEnemies, updateEnemies, getEnemies, removeEnemy } from './enemies.js'
+import { initItems, updateItems, getItems, removeItem } from './items.js'
 import { updateSceneCollision } from './collision.js'
 import { updateScore } from './hud.js'
 import { addEnemyExplosion, updateEnemyExplosions } from './particles.js'
@@ -41,6 +42,7 @@ renderer.domElement.addEventListener('touchend', (evt) => {
 initFloors(scene)
 initBackground(scene)
 initEnemies(scene)
+initItems(scene)
 
 camera.position.y = 5
 camera.position.z = 5
@@ -93,17 +95,37 @@ function onPlayerHit() {
   }
 }
 
+function gainHealth() {
+  if (health < 3) {
+    health++
+    document.getElementById('health-' + health).style.display = 'inline'
+  }
+}
+
 const dt = 1000 / 60
 function updateScene() {
   updateFloors(dt)
+  
   updateEnemies(onPlayerHit)
   const enemies = getEnemies()
   const deletedEnemies = updateSceneCollision(lines, enemies)
   updateScore(deletedEnemies.length * 10)
   for (let deleted of deletedEnemies) {
-    addEnemyExplosion(scene, deleted.position)
+    addEnemyExplosion(scene, deleted.position, 0xaaffbb)
     removeEnemy(deleted.name)
   }
+  
+  updateItems()
+  const items = getItems()
+  const gainedItems = updateSceneCollision(lines, items)
+  for (let item of gainedItems) {
+    if (item.itemType === 'heart') {
+      gainHealth()
+      addEnemyExplosion(scene, item.position, 0xffaaaa)
+      removeItem(item.name)
+    }
+ }
+  
   updateEnemyExplosions(dt)
 }
 

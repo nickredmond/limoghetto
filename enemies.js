@@ -34,6 +34,7 @@ export function removeEnemy(name) {
 function addEnemy() {
   const sphere = new Mesh(geometry, material);
   initObject(sphere)
+  sphere.rotation.y = 1.571
   scene.add(sphere);
   enemies.push(sphere)
 }

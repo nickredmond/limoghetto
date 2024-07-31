@@ -14,7 +14,7 @@ function rand(min, max) {
   return Math.random() * (max - min) + min
 }
 
-export function addEnemyExplosion(scene, position) {
+export function addEnemyExplosion(scene, position, color) {
     let points = []
     let sizes = []
     let velocities = []
@@ -31,7 +31,7 @@ export function addEnemyExplosion(scene, position) {
     geo.setAttribute('position', new Float32BufferAttribute(points, 3))
     geo.setAttribute('size', new Float32BufferAttribute(sizes, 1))
     
-    const mat = new PointsMaterial({color:0xaaffbb})
+    const mat = new PointsMaterial({color})
     const mesh = new Points(geo,mat)
     mesh.position.x = position.x
     mesh.position.y = position.y
