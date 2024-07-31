@@ -8,3 +8,7 @@ export function updateScore(amount) {
   }
   elmt.textContent = text
 }
+
+export function resetScore() {
+  document.getElementById('score').textContent = '00000'
+}

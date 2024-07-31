@@ -44,6 +44,10 @@ export function removeItem(name) {
   items = items.filter(e => e.name !== name)
 }
 
+export function resetItems() {
+  items = []
+}
+
 function addItem() {
   const heart = new Mesh(geometry, material);
   initObject(heart)

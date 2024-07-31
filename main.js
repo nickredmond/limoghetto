@@ -3,11 +3,11 @@ import { handleTouchMove, handleTouchEnd } from './touches.js'
 import { initFloors, updateFloors } from './floors.js'
 import { initBackground } from './background.js'
 import { removeObject3D } from './utils.js'
-import { initEnemies, updateEnemies, getEnemies, removeEnemy } from './enemies.js'
-import { initItems, updateItems, getItems, removeItem } from './items.js'
+import { initEnemies, updateEnemies, getEnemies, removeEnemy, resetEnemies } from './enemies.js'
+import { initItems, updateItems, getItems, removeItem, resetItems } from './items.js'
 import { updateSceneCollision } from './collision.js'
-import { updateScore } from './hud.js'
-import { addEnemyExplosion, updateEnemyExplosions } from './particles.js'
+import { updateScore, resetScore } from './hud.js'
+import { addEnemyExplosion, updateEnemyExplosions, resetParticles } from './particles.js'
 
 const scene = new THREE.Scene()
 
@@ -118,6 +118,7 @@ function updateScene() {
   updateItems()
   const items = getItems()
   const gainedItems = updateSceneCollision(lines, items)
+  updateScore(gainedItems.length * 5)
   for (let item of gainedItems) {
     if (item.itemType === 'heart') {
       gainHealth()
@@ -128,6 +129,29 @@ function updateScene() {
   
   updateEnemyExplosions(dt)
 }
+
+function restartGame() {
+  while(scene.children.length > 0){ 
+    removeObject3D(scene.children[0]); 
+  }
+  resetEnemies()
+  resetItems()
+  resetParticles()
+  resetScore()
+  initFloors(scene)
+  initBackground(scene)
+  scene.add(light)
+  document.getElementById('crosshair').style.display = 'block'
+  document.getElementById('game-over').style.display = 'none'
+  document.getElementById('health-1').style.display = 'inline'
+  document.getElementById('health-2').style.display = 'inline'
+  document.getElementById('health-3').style.display = 'inline'
+  health = 3
+}
+
+document.getElementById('btn-retry').addEventListener('touchstart', () => {
+  restartGame()
+})
 
 function animate() {
   if (health > 0) {

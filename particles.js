@@ -10,6 +10,10 @@ import { removeObject3D } from './utils.js'
 
 let enemyExplosions = []
 
+export function resetParticles() {
+  enemyExplosions = []
+}
+
 function rand(min, max) {
   return Math.random() * (max - min) + min
 }

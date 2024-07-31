@@ -31,6 +31,10 @@ export function removeEnemy(name) {
   enemies = enemies.filter(e => e.name !== name)
 }
 
+export function resetEnemies() {
+  enemies = []
+}
+
 function addEnemy() {
   const sphere = new Mesh(geometry, material);
   initObject(sphere)

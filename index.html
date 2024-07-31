@@ -16,7 +16,10 @@
       <p id="score">00000</p>
     </div>
     <button id="btn-shoot" type="button"></button>
-    <div id="game-over">GAME OVER</div>
+    <div id="game-over">
+      <p>GAME OVER</p>
+      <button id="btn-retry" type="button">RETRY</button>
+    </div>
     <style>
       #crosshair {
         position: absolute;
@@ -73,8 +76,21 @@
         top: 35vh;
         z-index: 10;
         font-family: Consolas;
-        font-size: 6vh;
         color: #efefef;
+        text-align: center;
+      }
+      
+      #game-over p {
+        font-size: 6vh;
+      }
+      
+      #game-over button {
+        color: #efefef;
+        padding: 0.25em;
+        font-size: 4vh;
+        background-color: transparent;
+        border: 0.5vh solid #efefef;
+        border-radius: 2vh;
       }
     </style>
     <script type="module" src="/main.js"></script> 
