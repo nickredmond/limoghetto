@@ -49,7 +49,8 @@ camera.position.z = 5
 camera.rotation.x = 0.2
 
 let lines = []
-document.getElementById('btn-shoot').addEventListener('touchstart', () => {
+document.getElementById('btn-shoot').addEventListener('touchstart', (evt) => {
+  evt.preventDefault()
   const yaw = camera.rotation.x 
   const pitch = camera.rotation.y 
   

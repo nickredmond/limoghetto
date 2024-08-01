@@ -8,8 +8,8 @@ import { removeObject3D } from './utils.js'
 import { initObject, updateObjects } from './objectUtils.js'
 
 const smallSize = 1 
-const mediumSize = 2 
-const bigSize = 3
+const mediumSize = 3
+const bigSize = 5
 
 let scene;
 let smallGeo, mediumGeo, bigGeo;
@@ -58,7 +58,7 @@ function addEnemy() {
   }
   const sphere = new Mesh(geometry, material);
   initObject(sphere)
-  sphere.rotation.y = 1.571
+  sphere.rotation.y = -1.571
   sphere.size = size
   scene.add(sphere);
   enemies.push(sphere)
