@@ -13,7 +13,7 @@ const bigSize = 5
 
 let scene;
 let smallGeo, mediumGeo, bigGeo;
-let material;
+let smallMat, mediumMat, bigMat;
 let isEnemyTimeout = false
 
 export function initEnemies(scn) {
@@ -21,10 +21,18 @@ export function initEnemies(scn) {
   smallGeo = new SphereGeometry(smallSize);
   mediumGeo = new SphereGeometry(mediumSize);
   bigGeo = new SphereGeometry(bigSize);
-  const texture = new TextureLoader()
-    .load('textures/alien.jpg')
-  material = new MeshStandardMaterial({
-    map: texture
+  const loader = new TextureLoader()
+  const smallTexture = loader.load('textures/alien.jpg')
+  smallMat = new MeshStandardMaterial({
+    map: smallTexture
+  });
+  const mediumTexture = loader.load('textures/alien.jpg')
+  mediumMat = new MeshStandardMaterial({
+    map: mediumTexture
+  });
+  const bigTexture = loader.load('textures/bisbee.jpg')
+  bigMat = new MeshStandardMaterial({
+    map: bigTexture
   });
 }
 
@@ -44,16 +52,20 @@ export function resetEnemies() {
 
 function addEnemy() {
   let geometry;
+  let material;
   let size;
   const odds = Math.random()
   if (odds < 0.34) {
     geometry = smallGeo
+    material = smallMat
     size = smallSize
   } else if (odds < 0.67) {
     geometry = mediumGeo
+    material = mediumMat
     size = mediumSize
   } else {
     geometry = bigGeo
+    material = bigMat
     size = bigSize
   }
   const sphere = new Mesh(geometry, material);
