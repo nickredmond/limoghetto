@@ -8,13 +8,13 @@ export function initObject(mesh) {
   const x1 = 0
   const y1 = 5
   const z1 = 5
-  const x2 = Math.random()*1.5*dist - 0.75*dist
-  const y2 = Math.random()*0.75*dist
-  const z2 = Math.sqrt(
-    (dist * dist) - 
-    ((x2 - x1) * (x2 - x1)) - 
-    ((y2 - y1) * (y2 - y1))
-  ) + z1
+  const x2 = Math.random()*0.5*dist - 0.25*dist
+  const y2 = Math.random()*0.2*dist + 5
+  const z2 = dist*2// Math.sqrt(
+    //(dist * dist) - 
+   // ((x2 - x1) * (x2 - x1)) - 
+  //  ((y2 - y1) * (y2 - y1))
+ // ) + z1
   
   const enemyLoc = new Vector3(x2, y2, z2)
   const playerLoc = new Vector3(x1, y1, z1)
@@ -28,9 +28,9 @@ export function initObject(mesh) {
   meshIndex++
   
   mesh.direction = {
-   x: direction.x * 0.5,
-   y: direction.y * 0.5,
-   z: direction.z * 0.5
+   x: 0, // direction.x * 0.5,
+   y: 0,// direction.y * 0.5,
+   z: -0.25// direction.z * 0.5
   }
 }
 

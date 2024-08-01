@@ -55,7 +55,7 @@ function calcEnemyParticles(e) {
   let currentIndex = 0
   for (let i = 0; i < 300; i+=3) {
     if (currentIndex === removedIndex) {
-      particles[i+2] = 25
+      particles[i+2] = 200
     } else {
       particles[i] += e.velocities[i]
       e.velocities[i] += e.velocities[i] > 0 ? -0.005 : 0.005

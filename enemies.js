@@ -7,13 +7,20 @@ import {
 import { removeObject3D } from './utils.js'
 import { initObject, updateObjects } from './objectUtils.js'
 
+const smallSize = 1 
+const mediumSize = 2 
+const bigSize = 3
+
 let scene;
-let geometry, material;
+let smallGeo, mediumGeo, bigGeo;
+let material;
 let isEnemyTimeout = false
 
 export function initEnemies(scn) {
   scene = scn
-  geometry = new SphereGeometry(2);
+  smallGeo = new SphereGeometry(smallSize);
+  mediumGeo = new SphereGeometry(mediumSize);
+  bigGeo = new SphereGeometry(bigSize);
   const texture = new TextureLoader()
     .load('textures/alien.jpg')
   material = new MeshStandardMaterial({
@@ -36,9 +43,23 @@ export function resetEnemies() {
 }
 
 function addEnemy() {
+  let geometry;
+  let size;
+  const odds = Math.random()
+  if (odds < 0.34) {
+    geometry = smallGeo
+    size = smallSize
+  } else if (odds < 0.67) {
+    geometry = mediumGeo
+    size = mediumSize
+  } else {
+    geometry = bigGeo
+    size = bigSize
+  }
   const sphere = new Mesh(geometry, material);
   initObject(sphere)
   sphere.rotation.y = 1.571
+  sphere.size = size
   scene.add(sphere);
   enemies.push(sphere)
 }

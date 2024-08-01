@@ -11,8 +11,8 @@ import { addEnemyExplosion, updateEnemyExplosions, resetParticles } from './part
 
 const scene = new THREE.Scene()
 
-const light = new THREE.PointLight(0xffffff, 1500)
-light.position.set(0, 20, 0)
+const light = new THREE.PointLight(0xffffff, 2000)
+light.position.set(0, 30, 0)
 scene.add(light)
 
 const fieldOfViewDegrees = 75
@@ -134,6 +134,7 @@ function restartGame() {
   while(scene.children.length > 0){ 
     removeObject3D(scene.children[0]); 
   }
+  lines = []
   resetEnemies()
   resetItems()
   resetParticles()

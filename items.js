@@ -52,6 +52,7 @@ function addItem() {
   const heart = new Mesh(geometry, material);
   initObject(heart)
   heart.rotation.z = 3.142
+  heart.size = 2
   heart.itemType = 'heart'
   scene.add(heart);
   items.push(heart)

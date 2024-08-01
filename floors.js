@@ -32,13 +32,13 @@ function addFloor(x, y, z) {
   floors.push(plane)
 }
 
-const MAX_LENGTH = 150
+const MAX_LENGTH = 200
 
 export function initFloors(scn) {
   scene = scn
   const increment = PANEL_SIZE - 0.1
-  for (var x = -MAX_LENGTH; x < MAX_LENGTH; x += increment) {
-    for (var z = -MAX_LENGTH; z <= MAX_LENGTH/2; z += increment) {
+  for (var x = -MAX_LENGTH*0.75; x < MAX_LENGTH*0.8; x += increment) {
+    for (var z = -MAX_LENGTH; z <= MAX_LENGTH/4; z += increment) {
       addFloor(x, 0, z)
     }
   }
@@ -49,7 +49,7 @@ const velocity = 20
 export function updateFloors(dt) {
   const movement = velocity * dt / 1000
   for (let floor of floors) {
-    if (floor.position.z >= MAX_LENGTH/2) {
+    if (floor.position.z >= MAX_LENGTH/4) {
       floor.position.z = -MAX_LENGTH
     } else {
       floor.position.z += movement
