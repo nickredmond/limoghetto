@@ -112,7 +112,7 @@ function updateScene() {
   const deletedEnemies = updateSceneCollision(lines, enemies)
   updateScore(deletedEnemies.length * 10)
   for (let deleted of deletedEnemies) {
-    addEnemyExplosion(scene, deleted.position, 0xaaffbb)
+    addEnemyExplosion(scene, deleted.position, deleted.particleColor)
     removeEnemy(deleted.name)
   }
   

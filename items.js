@@ -8,6 +8,8 @@ import {
 import { removeObject3D } from './utils.js'
 import { initObject, updateObjects } from './objectUtils.js'
 
+const heartSpeed = 0.25
+
 let scene;
 let geometry, material;
 let isItemTimeout = false
@@ -50,7 +52,7 @@ export function resetItems() {
 
 function addItem() {
   const heart = new Mesh(geometry, material);
-  initObject(heart)
+  initObject(heart, heartSpeed)
   heart.rotation.z = 3.142
   heart.size = 2
   heart.itemType = 'heart'

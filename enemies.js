@@ -54,24 +54,33 @@ function addEnemy() {
   let geometry;
   let material;
   let size;
+  let speed;
+  let color;
   const odds = Math.random()
   if (odds < 0.34) {
     geometry = smallGeo
     material = smallMat
     size = smallSize
+    speed = 0.4
+    color = 0xaabbff
   } else if (odds < 0.67) {
     geometry = mediumGeo
     material = mediumMat
     size = mediumSize
+    speed = 0.3
+    color = 0xaaffbb
   } else {
     geometry = bigGeo
     material = bigMat
     size = bigSize
+    speed = 0.2
+    color = 0xdfdfdf
   }
   const sphere = new Mesh(geometry, material);
-  initObject(sphere)
+  initObject(sphere, speed)
   sphere.rotation.y = -1.571
   sphere.size = size
+  sphere.particleColor = color
   scene.add(sphere);
   enemies.push(sphere)
 }
