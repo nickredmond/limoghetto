@@ -61,19 +61,19 @@ function addEnemy() {
     geometry = smallGeo
     material = smallMat
     size = smallSize
-    speed = 0.4
+    speed = 0.3
     color = 0xaabbff
   } else if (odds < 0.67) {
     geometry = mediumGeo
     material = mediumMat
     size = mediumSize
-    speed = 0.3
+    speed = 0.4
     color = 0xaaffbb
   } else {
     geometry = bigGeo
     material = bigMat
     size = bigSize
-    speed = 0.2
+    speed = 0.5
     color = 0xdfdfdf
   }
   const sphere = new Mesh(geometry, material);
