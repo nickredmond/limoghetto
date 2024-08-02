@@ -8,6 +8,7 @@ import { initItems, updateItems, getItems, removeItem, resetItems } from './item
 import { updateSceneCollision } from './collision.js'
 import { updateScore, resetScore } from './hud.js'
 import { addEnemyExplosion, updateEnemyExplosions, resetParticles } from './particles.js'
+import { gainHeat, updateHeatbar, canShoot, resetHeatbar } from './heatbar.js'
 
 const scene = new THREE.Scene()
 
@@ -49,8 +50,7 @@ camera.position.z = 5
 camera.rotation.x = 0.2
 
 let lines = []
-document.getElementById('btn-shoot').addEventListener('touchstart', (evt) => {
-  evt.preventDefault()
+function shoot() {
   const yaw = camera.rotation.x 
   const pitch = camera.rotation.y 
   
@@ -64,10 +64,10 @@ document.getElementById('btn-shoot').addEventListener('touchstart', (evt) => {
   } );
   
   const points = [];
-points.push( new THREE.Vector3( 0, 5, 5 ) );
-points.push( new THREE.Vector3( qx, 5 + qy, 5 + qz ) );
+  points.push( new THREE.Vector3( 0, 5, 5 ) );
+  points.push( new THREE.Vector3( qx, 5 + qy, 5 + qz ) );
 
-const geometry = new THREE.BufferGeometry().setFromPoints( points );
+  const geometry = new THREE.BufferGeometry().setFromPoints( points );
   
   const line = new THREE.Line( geometry, material );
   scene.add(line)
@@ -82,6 +82,14 @@ const geometry = new THREE.BufferGeometry().setFromPoints( points );
      clearInterval(lineInterval)
    }
   }, 1000 / 60)
+}
+
+document.getElementById('btn-shoot').addEventListener('touchstart', (evt) => {
+  evt.preventDefault()
+  if (canShoot()) {
+    shoot()
+    gainHeat(10)
+  }
 })
 
 let health = 3 
@@ -106,6 +114,7 @@ function gainHealth() {
 const dt = 1000 / 60
 function updateScene() {
   updateFloors(dt)
+  updateHeatbar(dt)
   
   updateEnemies(onPlayerHit)
   const enemies = getEnemies()
@@ -140,6 +149,7 @@ function restartGame() {
   resetItems()
   resetParticles()
   resetScore()
+  resetHeatbar()
   initFloors(scene)
   initBackground(scene)
   scene.add(light)

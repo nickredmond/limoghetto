@@ -7,6 +7,9 @@
   </head> 
   <body>
     <img id="crosshair" src="/crosshair.png" />
+    <div id="heatbar-border">
+      <div id="heatbar-fill"></div>
+    </div>
     <div id="health-wrapper">
       <span id="health-1">&hearts;</span>
       <span id="health-2">&hearts;</span>
@@ -60,7 +63,7 @@
       #health-wrapper {
         position: absolute;
         left: 8vw;
-        top: 8vw;
+        top: 14vw;
         z-index: 10;
       }
       
@@ -91,6 +94,22 @@
         background-color: transparent;
         border: 0.5vh solid #efefef;
         border-radius: 2vh;
+      }
+      
+      #heatbar-border {
+        position: absolute;
+        top: 8vw;
+        left: 8vw;
+        height: 3vw;
+        border: 0.5vh solid #efefef;
+        border-radius: 1vh;
+        width: 40vw;
+      }
+      
+      #heatbar-fill {
+        background-color: #efefef;
+        width: 0;
+        height: 100%;
       }
     </style>
     <script type="module" src="/main.js"></script> 
