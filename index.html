@@ -19,12 +19,17 @@
       <p id="score">00000</p>
     </div>
     <button id="btn-shoot" type="button"></button>
-    <div id="game-over">
+    <div id="game-over" class="overlay">
       <p>GAME OVER</p>
       <button id="btn-retry" type="button">RETRY</button>
     </div>
+    <div id="main-menu" class="overlay">
+      <p>Moon Tweak</p>
+      <button id="btn-start" type="button">PLAY</button>
+    </div>
     <style>
       #crosshair {
+        display: none;
         position: absolute;
         z-index: 10;
         width: 10vw;
@@ -74,20 +79,23 @@
       
       #game-over {
         display: none;
+      }
+      
+      .overlay {
         position: absolute;
         left: 20vw;
-        top: 35vh;
+        top: 25vh;
         z-index: 10;
         font-family: Consolas;
         color: #efefef;
         text-align: center;
       }
       
-      #game-over p {
+      .overlay p {
         font-size: 6vh;
       }
       
-      #game-over button {
+      .overlay button {
         color: #efefef;
         padding: 0.25em;
         font-size: 4vh;

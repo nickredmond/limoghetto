@@ -9,6 +9,7 @@ import { updateSceneCollision } from './collision.js'
 import { updateScore, resetScore } from './hud.js'
 import { addEnemyExplosion, updateEnemyExplosions, resetParticles } from './particles.js'
 import { gainHeat, updateHeatbar, canShoot, resetHeatbar } from './heatbar.js'
+import { initSound, playSound } from './sound.js'
 
 const scene = new THREE.Scene()
 
@@ -87,12 +88,13 @@ function shoot() {
 document.getElementById('btn-shoot').addEventListener('touchstart', (evt) => {
   evt.preventDefault()
   if (canShoot()) {
+    playSound('shoot')
     shoot()
     gainHeat(10)
   }
 })
 
-let health = 3 
+let health = 0
 function onPlayerHit() {
   if (health > 0) {
     document.getElementById('health-' + health).style.display = 'none'
@@ -160,6 +162,13 @@ function restartGame() {
   document.getElementById('health-3').style.display = 'inline'
   health = 3
 }
+
+document.getElementById('btn-start').addEventListener('touchstart', () => {
+  initSound(camera)
+  health = 3
+  document.getElementById('main-menu').style.display = 'none'
+  document.getElementById('crosshair').style.display = 'inline'
+})
 
 document.getElementById('btn-retry').addEventListener('touchstart', () => {
   restartGame()
